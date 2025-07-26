@@ -52,16 +52,12 @@ export default function Header() {
     router.push('/role-selection');
   }
 
-  if (!user) {
-    return null; // or a loading skeleton
-  }
-
   return (
     <header className="sticky top-0 z-10 flex items-center justify-between h-16 px-4 bg-background/80 backdrop-blur-sm border-b">
       <div className="flex items-center gap-2">
         <SidebarTrigger className="md:hidden" />
         <h1 className="text-lg font-semibold font-headline md:text-xl">
-          Welcome, {user.name.split(' ')[0]}!
+          {user ? `Welcome, ${user.name.split(' ')[0]}!` : 'Welcome!'}
         </h1>
       </div>
 
@@ -89,35 +85,37 @@ export default function Header() {
           <span className="sr-only">View notifications</span>
         </Button>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center gap-2">
-              <Avatar className="w-8 h-8">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <span className="hidden md:inline">{user.name}</span>
-              <ChevronDown className="w-4 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <UserIcon className="mr-2 h-4 w-4" />
-              <span>Profile</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {user && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="flex items-center gap-2">
+                <Avatar className="w-8 h-8">
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <span className="hidden md:inline">{user.name}</span>
+                <ChevronDown className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <UserIcon className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </div>
     </header>
   );
