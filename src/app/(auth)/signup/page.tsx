@@ -53,7 +53,7 @@ export default function SignupPage() {
             </RadioGroup>
         </div>
         <Button asChild type="submit" className="w-full transition-transform hover:scale-105">
-          <Link href="/dashboard">Create an account</Link>
+          <Link href="/role-selection">Create an account</Link>
         </Button>
       </CardContent>
        <div className="mt-4 p-6 pt-0 text-center text-sm">

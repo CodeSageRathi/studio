@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext, useEffect } from 'react';
 import type { Role } from '@/types';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import SidebarNav from '@/components/layout/sidebar-nav';
 import Header from '@/components/layout/header';
+import { useSearchParams } from 'next/navigation';
 
 interface AppShellContextType {
   role: Role;
@@ -21,8 +22,16 @@ export function useAppShell() {
   return context;
 }
 
-export function AppShell({ children }: { children: React.ReactNode }) {
-  const [role, setRole] = useState<Role>('buyer');
+function AppShellInternal({ children }: { children: React.ReactNode }) {
+  const searchParams = useSearchParams();
+  const roleFromQuery = searchParams.get('role') as Role | null;
+  const [role, setRole] = useState<Role>(roleFromQuery || 'buyer');
+
+  useEffect(() => {
+    if (roleFromQuery) {
+      setRole(roleFromQuery);
+    }
+  }, [roleFromQuery]);
 
   return (
     <AppShellContext.Provider value={{ role, setRole }}>
@@ -35,4 +44,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </SidebarProvider>
     </AppShellContext.Provider>
   );
+}
+
+export function AppShell({ children }: { children: React.ReactNode }) {
+  return (
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <AppShellInternal>{children}</AppShellInternal>
+    </React.Suspense>
+  )
 }

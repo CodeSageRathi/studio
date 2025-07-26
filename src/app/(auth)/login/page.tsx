@@ -37,7 +37,7 @@ export default function LoginPage() {
           <Input id="password" type="password" required />
         </div>
         <Button asChild type="submit" className="w-full transition-transform hover:scale-105">
-          <Link href="/dashboard">Login</Link>
+          <Link href="/role-selection">Login</Link>
         </Button>
       </CardContent>
       <div className="mt-4 p-6 pt-0 text-center text-sm">
