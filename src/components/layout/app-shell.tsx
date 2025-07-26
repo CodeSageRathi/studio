@@ -5,7 +5,7 @@ import type { Role } from '@/types';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import SidebarNav from '@/components/layout/sidebar-nav';
 import Header from '@/components/layout/header';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface AppShellContextType {
   role: Role;
