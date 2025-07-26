@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from 'react';
-import { MapPin, Search, CircleDot } from "lucide-react";
+import { MapPin, Search, CircleDot, Milestone } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -43,11 +43,13 @@ export default function MapPage() {
   const [foundSuppliers, setFoundSuppliers] = useState<User[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [visibleSuppliers, setVisibleSuppliers] = useState<User[]>([]);
+  const [mapBounds, setMapBounds] = useState({lng1: searchCenter.lng-0.1, lat1: searchCenter.lat-0.1, lng2: searchCenter.lng+0.1, lat2: searchCenter.lat+0.1});
 
-  useEffect(() => {
-    // When a new search happens, update the visible suppliers
-    if (isSearching) {
-      const nearby = allSuppliers.filter(supplier => {
+
+  const handleSearch = () => {
+    setIsSearching(true);
+    // Find nearby suppliers
+    const nearby = allSuppliers.filter(supplier => {
         if (supplier.location) {
           const distance = getDistance(
             searchCenter.lat,
@@ -59,23 +61,22 @@ export default function MapPage() {
         }
         return false;
       });
-      setFoundSuppliers(nearby);
-      setVisibleSuppliers(nearby);
-    } else {
-        // If not searching, no suppliers are visible
-        setVisibleSuppliers([]);
-    }
-  }, [isSearching, radius]);
+    setFoundSuppliers(nearby);
+    setVisibleSuppliers(nearby);
 
-
-  const handleSearch = () => {
-    setIsSearching(true);
+    // Update map bounds to "zoom"
+    const radiusInDegrees = radius / 111.32; // rough conversion from km to degrees
+    setMapBounds({
+        lng1: searchCenter.lng - radiusInDegrees,
+        lat1: searchCenter.lat - radiusInDegrees,
+        lng2: searchCenter.lng + radiusInDegrees,
+        lat2: searchCenter.lat + radiusInDegrees,
+    });
   };
   
   const mapUrl = useMemo(() => {
-    // Basic map centered on our search area. A real implementation would be more dynamic.
-    return `https://www.openstreetmap.org/export/embed.html?bbox=${searchCenter.lng-0.1},${searchCenter.lat-0.1},${searchCenter.lng+0.1},${searchCenter.lat+0.1}`;
-  }, []);
+    return `https://www.openstreetmap.org/export/embed.html?bbox=${mapBounds.lng1},${mapBounds.lat1},${mapBounds.lng2},${mapBounds.lat2}`;
+  }, [mapBounds]);
 
   return (
     <div className="space-y-8">
@@ -140,8 +141,14 @@ export default function MapPage() {
             {visibleSuppliers.map((supplier) => {
                 if(!supplier.location) return null;
                 // This positioning is a simple approximation and not perfectly accurate on a projected map.
-                const top = 50 - (supplier.location.lat - searchCenter.lat) * 500; // Adjusted multiplier for smaller bbox
-                const left = 50 + (supplier.location.lng - searchCenter.lng) * 500; // Adjusted multiplier for smaller bbox
+                const latDiff = supplier.location.lat - mapBounds.lat1;
+                const lonDiff = supplier.location.lng - mapBounds.lng1;
+                const latRange = mapBounds.lat2 - mapBounds.lat1;
+                const lonRange = mapBounds.lng2 - mapBounds.lng1;
+                
+                const top = 100 - (latDiff / latRange) * 100;
+                const left = (lonDiff / lonRange) * 100;
+
 
                 return (
                     <div key={supplier.id} className="absolute" style={{ top: `${top}%`, left: `${left}%` }}>
@@ -188,7 +195,20 @@ export default function MapPage() {
                                         <p className="text-sm text-muted-foreground">{supplier.location?.city}</p>
                                     </div>
                                 </div>
-                                <Button variant="outline" size="sm">View Details</Button>
+                                <Button 
+                                    variant="outline" 
+                                    size="sm" 
+                                    asChild
+                                >
+                                    <a 
+                                        href={`https://www.google.com/maps/dir/?api=1&destination=${supplier.location?.lat},${supplier.location?.lng}`} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                    >
+                                        <Milestone className="mr-2 h-4 w-4" />
+                                        Get Directions
+                                    </a>
+                                </Button>
                             </li>
                         ))}
                     </ul>
