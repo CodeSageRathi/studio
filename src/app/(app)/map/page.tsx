@@ -225,7 +225,7 @@ export default function MapPage() {
                 <CardDescription>
                   {foundSuppliers.length > 0
                     ? `Found ${foundSuppliers.length} supplier(s) within ${radius}km of ${searchQuery}.`
-                    : `No suppliers found within ${radius}km of ${searchQuery}. Try increasing the radius or searching a different area like 'Kolkata' or 'New Delhi'.`
+                    : `No suppliers found within ${radius}km of '${searchQuery}'. Try increasing the radius or searching a different area like 'Kolkata' or 'New Delhi'.`
                   }
                 </CardDescription>
             </CardHeader>
