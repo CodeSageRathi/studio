@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { MapPin, Search, CircleDot } from "lucide-react";
 import {
   Card,
@@ -42,23 +42,34 @@ export default function MapPage() {
   const [radius, setRadius] = useState(5); // Default radius in km
   const [foundSuppliers, setFoundSuppliers] = useState<User[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [visibleSuppliers, setVisibleSuppliers] = useState<User[]>([]);
+
+  useEffect(() => {
+    // When a new search happens, update the visible suppliers
+    if (isSearching) {
+      const nearby = allSuppliers.filter(supplier => {
+        if (supplier.location) {
+          const distance = getDistance(
+            searchCenter.lat,
+            searchCenter.lng,
+            supplier.location.lat,
+            supplier.location.lng
+          );
+          return distance <= radius;
+        }
+        return false;
+      });
+      setFoundSuppliers(nearby);
+      setVisibleSuppliers(nearby);
+    } else {
+        // If not searching, no suppliers are visible
+        setVisibleSuppliers([]);
+    }
+  }, [isSearching, radius]);
+
 
   const handleSearch = () => {
     setIsSearching(true);
-    const nearby = allSuppliers.filter(supplier => {
-      if (supplier.location) {
-        const distance = getDistance(
-          searchCenter.lat,
-          searchCenter.lng,
-          supplier.location.lat,
-          supplier.location.lng
-        );
-        return distance <= radius;
-      }
-      return false;
-    });
-    setFoundSuppliers(nearby);
-    // In a real app, you might want to re-center the map here
   };
   
   const mapUrl = useMemo(() => {
@@ -126,7 +137,7 @@ export default function MapPage() {
                 </div>
             </div>
             
-            {(isSearching ? foundSuppliers : allSuppliers).map((supplier, index) => {
+            {visibleSuppliers.map((supplier) => {
                 if(!supplier.location) return null;
                 // This positioning is a simple approximation and not perfectly accurate on a projected map.
                 const top = 50 - (supplier.location.lat - searchCenter.lat) * 500; // Adjusted multiplier for smaller bbox
