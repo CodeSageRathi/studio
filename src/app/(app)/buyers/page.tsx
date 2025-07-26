@@ -1,12 +1,11 @@
 
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Search, Mail, MessageSquare } from 'lucide-react';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -17,10 +16,16 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { mockUsers } from '@/lib/mock-data';
 import type { User } from '@/types';
 
-const allBuyers = Object.values(mockUsers).filter(u => u.role === 'buyer');
-
 export default function BuyersPage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [allBuyers, setAllBuyers] = useState<User[]>([]);
+
+  useEffect(() => {
+    // On component mount, load users from localStorage or fall back to mock data
+    const storedUsers = localStorage.getItem('tradeflow-all-users');
+    const users = storedUsers ? JSON.parse(storedUsers) : mockUsers;
+    setAllBuyers(Object.values(users).filter((u: any) => u.role === 'buyer'));
+  }, []);
 
   const filteredBuyers = useMemo(() => {
     if (!searchQuery) {
@@ -32,7 +37,7 @@ export default function BuyersPage() {
         buyer.name.toLowerCase().includes(lowercasedQuery) ||
         (buyer.email && buyer.email.toLowerCase().includes(lowercasedQuery))
     );
-  }, [searchQuery]);
+  }, [searchQuery, allBuyers]);
 
   return (
     <div className="space-y-8">

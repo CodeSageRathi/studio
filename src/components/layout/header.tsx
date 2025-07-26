@@ -53,7 +53,9 @@ export default function Header() {
       });
     } else {
       // Fallback to mock data if nothing in localStorage (e.g., for login flow)
-      const mockUser = mockUsers[role] || (role === 'supplier' ? mockUsers['supplier1'] : mockUsers['buyer']);
+      // On login, find the user from the "database"
+      const allUsers = JSON.parse(localStorage.getItem('tradeflow-all-users') || JSON.stringify(mockUsers));
+      const mockUser = Object.values(allUsers).find((u: any) => u.role === role) as User;
       setUser(mockUser);
     }
   }, [role]);

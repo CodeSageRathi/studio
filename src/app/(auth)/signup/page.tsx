@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { mockUsers } from "@/lib/mock-data";
 
 export default function SignupPage() {
   const [firstName, setFirstName] = useState('');
@@ -23,8 +24,26 @@ export default function SignupPage() {
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     const fullName = `${firstName} ${lastName}`;
+    const role = localStorage.getItem('tradeflow-role') || 'buyer';
+
+    // Get existing users from localStorage or start with mock data
+    const allUsers = JSON.parse(localStorage.getItem('tradeflow-all-users') || JSON.stringify(mockUsers));
     
-    // Simulate a real user session by storing user info in localStorage
+    // Create new user object
+    const newUser = {
+      id: `user-${Date.now()}`,
+      name: fullName,
+      email: email,
+      role: role,
+      avatar: 'https://placehold.co/100x100.png',
+      location: role === 'supplier' ? { lat: 28.6139, lng: 77.2090, city: 'New Delhi', country: 'India' } : undefined
+    };
+
+    // Add the new user to the list
+    allUsers[newUser.id] = newUser;
+
+    // Save the updated user list and current user info
+    localStorage.setItem('tradeflow-all-users', JSON.stringify(allUsers));
     localStorage.setItem('tradeflow-user-name', fullName);
     localStorage.setItem('tradeflow-user-email', email);
     

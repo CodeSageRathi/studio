@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Search, Mail, MessageSquare } from 'lucide-react';
 import {
   Card,
@@ -17,10 +17,16 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { mockUsers } from '@/lib/mock-data';
 import type { User } from '@/types';
 
-const allSuppliers = Object.values(mockUsers).filter(u => u.role === 'supplier');
-
 export default function SuppliersPage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [allSuppliers, setAllSuppliers] = useState<User[]>([]);
+
+  useEffect(() => {
+    // On component mount, load users from localStorage or fall back to mock data
+    const storedUsers = localStorage.getItem('tradeflow-all-users');
+    const users = storedUsers ? JSON.parse(storedUsers) : mockUsers;
+    setAllSuppliers(Object.values(users).filter((u: any) => u.role === 'supplier'));
+  }, []);
 
   const filteredSuppliers = useMemo(() => {
     if (!searchQuery) {
@@ -32,7 +38,7 @@ export default function SuppliersPage() {
         supplier.name.toLowerCase().includes(lowercasedQuery) ||
         (supplier.email && supplier.email.toLowerCase().includes(lowercasedQuery))
     );
-  }, [searchQuery]);
+  }, [searchQuery, allSuppliers]);
 
   return (
     <div className="space-y-8">
