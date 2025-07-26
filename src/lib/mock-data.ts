@@ -14,6 +14,12 @@ export const mockUsers: Record<Role, User> = {
     email: 'raj.patel@example.com',
     role: 'supplier',
     avatar: 'https://placehold.co/100x100.png',
+    location: {
+      lat: 28.6139,
+      lng: 77.2090,
+      city: 'New Delhi',
+      country: 'India',
+    }
   },
 };
 

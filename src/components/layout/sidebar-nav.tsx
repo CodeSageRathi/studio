@@ -10,6 +10,7 @@ import {
   Heart,
   Home,
   Lightbulb,
+  MapPin,
   MessageSquare,
   Package,
   Search,
@@ -34,6 +35,7 @@ const buyerLinks = [
   { href: '/products', label: 'Browse Products', icon: Search },
   { href: '/orders', label: 'My Orders', icon: ShoppingCart },
   { href: '/wishlist', label: 'Wishlist', icon: Heart },
+  { href: '/map', label: 'Locate Suppliers', icon: MapPin },
   { href: '/chat', label: 'Chat', icon: MessageSquare },
 ];
 

@@ -6,6 +6,12 @@ export interface User {
   email: string;
   role: Role;
   avatar: string;
+  location?: {
+    lat: number;
+    lng: number;
+    city: string;
+    country: string;
+  };
 }
 
 export interface Product {
