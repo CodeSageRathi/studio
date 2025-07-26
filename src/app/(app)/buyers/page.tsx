@@ -30,7 +30,7 @@ export default function BuyersPage() {
     return allBuyers.filter(
       (buyer) =>
         buyer.name.toLowerCase().includes(lowercasedQuery) ||
-        buyer.email.toLowerCase().includes(lowercasedQuery)
+        (buyer.email && buyer.email.toLowerCase().includes(lowercasedQuery))
     );
   }, [searchQuery]);
 

@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useMemo } from 'react';
@@ -29,7 +30,7 @@ export default function SuppliersPage() {
     return allSuppliers.filter(
       (supplier) =>
         supplier.name.toLowerCase().includes(lowercasedQuery) ||
-        supplier.email.toLowerCase().includes(lowercasedQuery)
+        (supplier.email && supplier.email.toLowerCase().includes(lowercasedQuery))
     );
   }, [searchQuery]);
 
