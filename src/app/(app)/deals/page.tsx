@@ -23,7 +23,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { suggestDeals, SuggestDealsInputSchema, type SuggestDealsInput, type SuggestDealsOutput } from "@/ai/flows/deals-suggestions"
+import { suggestDeals, type SuggestDealsOutput } from "@/ai/flows/deals-suggestions"
+import { SuggestDealsInputSchema, type SuggestDealsInput } from "@/ai/schemas/deals-suggestions"
 import { Skeleton } from "@/components/ui/skeleton"
 
 export default function DealsPage() {
