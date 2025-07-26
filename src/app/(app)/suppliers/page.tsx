@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { Search, Building, Mail, Phone, MessageSquare } from 'lucide-react';
+import { Search, Mail, MessageSquare } from 'lucide-react';
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
