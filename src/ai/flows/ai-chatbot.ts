@@ -10,6 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import { getStockPrice } from '@/ai/tools/stock-price';
 
 const AIChatbotInputSchema = z.object({
   query: z.string().describe('The user query for the AI chatbot.'),
@@ -29,7 +30,10 @@ const aiChatbotPrompt = ai.definePrompt({
   name: 'aiChatbotPrompt',
   input: {schema: AIChatbotInputSchema},
   output: {schema: AIChatbotOutputSchema},
+  tools: [getStockPrice],
   prompt: `You are a helpful AI chatbot designed to answer user questions about the TradeFlow platform, products, orders, and other relevant topics.
+  
+  If the user asks about a stock price, use the getStockPrice tool to get the current price and include it in your answer.
 
   Respond to the following user query:
   {{query}}`,
