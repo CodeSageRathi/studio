@@ -9,16 +9,70 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { mockChatContacts, mockMessages } from '@/lib/mock-data';
-import type { ChatContact, Message } from '@/types';
+import type { ChatContact, Message, User } from '@/types';
 import { aiChatbot } from '@/ai/flows/ai-chatbot';
+import { useSearchParams } from 'next/navigation';
+
+// Helper to get chat state from localStorage
+const getChatState = () => {
+  if (typeof window === 'undefined') {
+    return { contacts: mockChatContacts, selectedId: mockChatContacts[0].id };
+  }
+  const storedContacts = localStorage.getItem('tradeflow-chat-contacts');
+  const storedSelectedId = localStorage.getItem('tradeflow-selected-chat-id');
+  const initialContacts = storedContacts ? JSON.parse(storedContacts) : mockChatContacts;
+  const initialSelectedId = storedSelectedId || initialContacts[0]?.id;
+  return { contacts: initialContacts, selectedId: initialSelectedId };
+};
 
 export function ChatLayout() {
-  const [contacts] = useState<ChatContact[]>(mockChatContacts);
-  const [selectedContact, setSelectedContact] = useState<ChatContact>(contacts[0]);
-  const [messages, setMessages] = useState<Message[]>(mockMessages[selectedContact.id] || []);
+  const searchParams = useSearchParams();
+  const [initialState] = useState(getChatState);
+  const [contacts, setContacts] = useState<ChatContact[]>(initialState.contacts);
+  const [selectedContact, setSelectedContact] = useState<ChatContact | undefined>(
+    initialState.contacts.find(c => c.id === initialState.selectedId)
+  );
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const contactId = searchParams.get('contactId');
+    if (contactId) {
+      const allUsers: Record<string, User> = JSON.parse(localStorage.getItem('tradeflow-all-users') || '{}');
+      const userToChat = Object.values(allUsers).find(u => u.id === contactId);
+
+      if (userToChat) {
+        setContacts(prevContacts => {
+          const contactExists = prevContacts.some(c => c.id === userToChat.id);
+          if (contactExists) {
+             localStorage.setItem('tradeflow-selected-chat-id', userToChat.id);
+            return prevContacts;
+          }
+          const newContact: ChatContact = {
+            id: userToChat.id,
+            name: userToChat.name,
+            avatar: userToChat.avatar,
+            lastMessage: 'Start a conversation...',
+            lastMessageTime: '',
+          };
+          const updatedContacts = [newContact, ...prevContacts];
+          localStorage.setItem('tradeflow-chat-contacts', JSON.stringify(updatedContacts));
+          localStorage.setItem('tradeflow-selected-chat-id', newContact.id);
+          return updatedContacts;
+        });
+      }
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    // Re-select contact when contacts list changes
+    const selectedId = localStorage.getItem('tradeflow-selected-chat-id');
+    const contactToSelect = contacts.find(c => c.id === selectedId) || contacts[0];
+    setSelectedContact(contactToSelect);
+  }, [contacts]);
+  
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -27,12 +81,14 @@ export function ChatLayout() {
   useEffect(scrollToBottom, [messages]);
   
   useEffect(() => {
-    setMessages(mockMessages[selectedContact.id] || []);
+    if (selectedContact) {
+      setMessages(mockMessages[selectedContact.id] || []);
+    }
   }, [selectedContact]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || !selectedContact) return;
 
     const newMessage: Message = {
       id: `msg-${Date.now()}`,
@@ -61,6 +117,14 @@ export function ChatLayout() {
   };
 
 
+  if (!selectedContact) {
+    return (
+      <div className="flex h-[calc(100vh-10rem)] w-full items-center justify-center rounded-xl border bg-card text-muted-foreground shadow-lg">
+        Select a contact to start chatting.
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-[calc(100vh-10rem)] w-full rounded-xl border bg-card shadow-lg">
       <div className="w-1/3 border-r">
@@ -74,7 +138,10 @@ export function ChatLayout() {
           {contacts.map((contact) => (
             <button
               key={contact.id}
-              onClick={() => setSelectedContact(contact)}
+              onClick={() => {
+                setSelectedContact(contact)
+                localStorage.setItem('tradeflow-selected-chat-id', contact.id);
+              }}
               className={cn(
                 'flex w-full items-center gap-3 p-4 text-left transition-colors hover:bg-accent/50',
                 selectedContact.id === contact.id && 'bg-accent'

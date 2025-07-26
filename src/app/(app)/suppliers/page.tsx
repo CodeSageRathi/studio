@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Search, Mail, MessageSquare } from 'lucide-react';
 import {
   Card,
@@ -19,6 +20,7 @@ import type { User } from '@/types';
 export default function SuppliersPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [allSuppliers, setAllSuppliers] = useState<User[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     // On component mount, load all users from localStorage.
@@ -39,6 +41,11 @@ export default function SuppliersPage() {
         (supplier.email && supplier.email.toLowerCase().includes(lowercasedQuery))
     );
   }, [searchQuery, allSuppliers]);
+
+  const handleSendMessage = (supplierId: string) => {
+    router.push(`/chat?contactId=${supplierId}`);
+  };
+
 
   return (
     <div className="space-y-8">
@@ -86,7 +93,7 @@ export default function SuppliersPage() {
                  </div>
               </CardContent>
               <CardFooter>
-                 <Button className="w-full transition-transform hover:scale-105">
+                 <Button className="w-full transition-transform hover:scale-105" onClick={() => handleSendMessage(supplier.id)}>
                    <MessageSquare className="mr-2 h-4 w-4" />
                    Send Message
                  </Button>
