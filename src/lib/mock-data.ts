@@ -1,6 +1,7 @@
+
 import type { Product, Order, User, ChatContact, Message, Role } from '@/types';
 
-export const mockUsers: Record<Role, User> = {
+export const mockUsers: Record<string, User> = {
   buyer: {
     id: 'user-1',
     name: 'Anjali Sharma',
@@ -8,7 +9,7 @@ export const mockUsers: Record<Role, User> = {
     role: 'buyer',
     avatar: 'https://placehold.co/100x100.png',
   },
-  supplier: {
+  supplier1: {
     id: 'user-2',
     name: 'Raj Patel',
     email: 'raj.patel@example.com',
@@ -18,6 +19,58 @@ export const mockUsers: Record<Role, User> = {
       lat: 28.6139,
       lng: 77.2090,
       city: 'New Delhi',
+      country: 'India',
+    }
+  },
+  supplier2: {
+    id: 'user-3',
+    name: 'Priya Singh',
+    email: 'priya.singh@example.com',
+    role: 'supplier',
+    avatar: 'https://placehold.co/100x100.png',
+    location: {
+      lat: 28.6517,
+      lng: 77.2219,
+      city: 'Old Delhi',
+      country: 'India',
+    }
+  },
+  supplier3: {
+    id: 'user-4',
+    name: 'Amit Kumar',
+    email: 'amit.kumar@example.com',
+    role: 'supplier',
+    avatar: 'https://placehold.co/100x100.png',
+    location: {
+      lat: 28.5275,
+      lng: 77.2066,
+      city: 'Hauz Khas, New Delhi',
+      country: 'India',
+    }
+  },
+   supplier4: {
+    id: 'user-5',
+    name: 'Deepak Rao',
+    email: 'deepak.rao@example.com',
+    role: 'supplier',
+    avatar: 'https://placehold.co/100x100.png',
+    location: {
+      lat: 28.4595,
+      lng: 77.0266,
+      city: 'Gurugram',
+      country: 'India',
+    }
+  },
+   supplier5: {
+    id: 'user-6',
+    name: 'Sunita Devi',
+    email: 'sunita.devi@example.com',
+    role: 'supplier',
+    avatar: 'https://placehold.co/100x100.png',
+    location: {
+      lat: 19.0760,
+      lng: 72.8777,
+      city: 'Mumbai',
       country: 'India',
     }
   },
@@ -63,7 +116,7 @@ export const mockProducts: Product[] = [
     dataAiHint: 'organic lentils',
     stock: 800,
     moq: 75,
-    supplierId: 'user-2',
+    supplierId: 'user-3',
     description: 'A mix of organic lentils, rich in protein and fiber. Perfect for a healthy and hearty meal.',
   },
   {
@@ -77,7 +130,7 @@ export const mockProducts: Product[] = [
     dataAiHint: 'coriander seeds',
     stock: 2000,
     moq: 200,
-    supplierId: 'user-2',
+    supplierId: 'user-4',
     description: 'Aromatic coriander seeds, essential for Indian curries and spice blends.',
   },
   {
@@ -91,7 +144,7 @@ export const mockProducts: Product[] = [
     dataAiHint: 'olive oil',
     stock: 250,
     moq: 20,
-    supplierId: 'user-2',
+    supplierId: 'user-5',
     description: 'Cold-pressed extra virgin olive oil, perfect for salads and dressings.',
   },
 ];
@@ -116,7 +169,7 @@ export const mockOrders: Order[] = [
     total: 1700,
     items: [{ product: mockProducts[2], quantity: 20 }],
     buyerId: 'user-1',
-    supplierId: 'user-2',
+    supplierId: 'user-3',
   },
   {
     id: 'order-103',
@@ -125,7 +178,7 @@ export const mockOrders: Order[] = [
     total: 800,
     items: [{ product: mockProducts[3], quantity: 20 }],
     buyerId: 'user-1',
-    supplierId: 'user-2',
+    supplierId: 'user-4',
   },
 ];
 
