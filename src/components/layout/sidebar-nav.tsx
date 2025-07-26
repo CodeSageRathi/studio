@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -44,7 +45,8 @@ const supplierLinks = [
   { href: '/dashboard', label: 'Dashboard', icon: Home },
   { href: '/inventory', label: 'Inventory', icon: Boxes },
   { href: '/orders', label: 'Manage Orders', icon: Package },
-  { href: '/deals', label: 'AI Deals', icon: Lightbulb },
+  { href: 'deals', label: 'AI Deals', icon: Lightbulb },
+  { href: '/buyers', label: 'Find Buyers', icon: Users },
   { href: '/chat', label: 'Chat', icon: MessageSquare },
 ];
 

@@ -9,6 +9,20 @@ export const mockUsers: Record<string, User> = {
     role: 'buyer',
     avatar: 'https://placehold.co/100x100.png',
   },
+  buyer2: {
+    id: 'user-8',
+    name: 'Priya Mehta',
+    email: 'priya.mehta@example.com',
+    role: 'buyer',
+    avatar: 'https://placehold.co/100x100.png',
+  },
+  buyer3: {
+    id: 'user-9',
+    name: 'Rohan Verma',
+    email: 'rohan.verma@example.com',
+    role: 'buyer',
+    avatar: 'https://placehold.co/100x100.png',
+  },
   supplier1: {
     id: 'user-2',
     name: 'Das Provisions',
@@ -221,13 +235,4 @@ export const mockChatContacts: ChatContact[] = [
 ];
 
 export const mockMessages: Record<string, Message[]> = {
-  'user-1': [
-     { id: 'msg-u1-1', sender: 'Anjali Sharma', content: 'Hi Raj, do you have any deals on turmeric powder?', timestamp: '9:28 AM', isSender: false },
-     { id: 'msg-u1-2', sender: 'You', content: 'Hi Anjali, yes we have a 10% discount for bulk orders over 50kg.', timestamp: '9:29 AM', isSender: true },
-     { id: 'msg-u1-3', sender: 'Anjali Sharma', content: 'Yes, that sounds good. Please send the quote.', timestamp: '9:30 AM', isSender: false },
-  ],
-  'user-2': [
-    { id: 'msg-u2-1', sender: 'You', content: 'Hi Raj, when is the new stock of lentils arriving?', timestamp: 'Yesterday', isSender: true },
-    { id: 'msg-u2-2', sender: 'Raj Patel', content: 'The new stock of lentils has arrived.', timestamp: 'Yesterday', isSender: false },
-  ]
 };
