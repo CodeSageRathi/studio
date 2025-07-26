@@ -36,11 +36,11 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
 const allSuppliers = Object.values(mockUsers).filter(u => u.role === 'supplier' && u.location);
 
 // A default central point for our map view before a search
-const initialCenter = { lat: 22.5650, lng: 88.3380, name: 'Prinsep Ghat, Kolkata' };
+const initialCenter = { lat: 22.5650, lng: 88.3380, name: 'Kolkata' };
 
 export default function MapPage() {
   const [radius, setRadius] = useState(5); // Default radius in km
-  const [searchQuery, setSearchQuery] = useState('Prinsep Ghat, Kolkata');
+  const [searchQuery, setSearchQuery] = useState('');
   const [searchCenter, setSearchCenter] = useState<{lat: number, lng: number, name: string} | null>(null);
   const [foundSuppliers, setFoundSuppliers] = useState<User[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -52,17 +52,28 @@ export default function MapPage() {
     
     // Simulate geocoding: find a supplier whose city matches the query to use as a search center.
     const queryLower = searchQuery.toLowerCase();
-    const centerSupplier = allSuppliers.find(s => s.location && queryLower.includes(s.location.city.toLowerCase()));
     
-    const currentSearchCenter = centerSupplier?.location 
-      ? { lat: centerSupplier.location.lat, lng: centerSupplier.location.lng, name: searchQuery } 
+    // Find a representative supplier location to center the map on.
+    // In a real app, this would be a Geocoding API call.
+    let centerSupplierLocation: User['location'] | undefined;
+    if (queryLower.includes('kolkata')) {
+        centerSupplierLocation = allSuppliers.find(s => s.location?.city.toLowerCase().includes('kolkata'))?.location;
+    } else if (queryLower.includes('new delhi')) {
+        centerSupplierLocation = allSuppliers.find(s => s.location?.city.toLowerCase().includes('new delhi'))?.location;
+    } else {
+        // Find the first supplier that matches the city query partially.
+        centerSupplierLocation = allSuppliers.find(s => s.location && queryLower.includes(s.location.city.toLowerCase()))?.location;
+    }
+    
+    const currentSearchCenter = centerSupplierLocation 
+      ? { lat: centerSupplierLocation.lat, lng: centerSupplierLocation.lng, name: searchQuery } 
       : null;
 
     if (!currentSearchCenter) {
       setFoundSuppliers([]);
       setVisibleSuppliers([]);
       setSearchCenter(null);
-      // Optionally show a toast message here: "Location not found"
+      // We still set isSearching to true to show the 'not found' message
       return;
     }
     
@@ -224,8 +235,8 @@ export default function MapPage() {
                 <CardTitle>Search Results</CardTitle>
                 <CardDescription>
                   {foundSuppliers.length > 0
-                    ? `Found ${foundSuppliers.length} supplier(s) within ${radius}km of ${searchQuery}.`
-                    : `No suppliers found within ${radius}km of '${searchQuery}'. Try increasing the radius or searching a different area like 'Kolkata' or 'New Delhi'.`
+                    ? `Found ${foundSuppliers.length} supplier(s) within ${radius}km of '${searchQuery}'.`
+                    : `No suppliers found for '${searchQuery}'. Try searching a different area like 'Kolkata' or 'New Delhi'.`
                   }
                 </CardDescription>
             </CardHeader>
