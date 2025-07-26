@@ -1,0 +1,88 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {
+  BarChart2,
+  Bot,
+  Boxes,
+  Heart,
+  Home,
+  Lightbulb,
+  MessageSquare,
+  Package,
+  Search,
+  ShoppingCart,
+  Users,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarFooter,
+} from '@/components/ui/sidebar';
+import { useAppShell } from './app-shell';
+import { TradeFlowLogo } from '../icons';
+
+const buyerLinks = [
+  { href: '/dashboard', label: 'Dashboard', icon: Home },
+  { href: '/products', label: 'Browse Products', icon: Search },
+  { href: '/orders', label: 'My Orders', icon: ShoppingCart },
+  { href: '/wishlist', label: 'Wishlist', icon: Heart },
+  { href: '/chat', label: 'Chat', icon: MessageSquare },
+];
+
+const supplierLinks = [
+  { href: '/dashboard', label: 'Dashboard', icon: Home },
+  { href: '/inventory', label: 'Inventory', icon: Boxes },
+  { href: '/orders', label: 'Manage Orders', icon: Package },
+  { href: '/deals', label: 'AI Deals', icon: Lightbulb },
+  { href: '/chat', label: 'Chat', icon: MessageSquare },
+];
+
+export default function SidebarNav() {
+  const { role } = useAppShell();
+  const pathname = usePathname();
+  const links = role === 'buyer' ? buyerLinks : supplierLinks;
+
+  return (
+    <Sidebar>
+      <SidebarHeader>
+        <Link href="/dashboard">
+          <TradeFlowLogo />
+        </Link>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarMenu>
+          {links.map((link) => (
+            <SidebarMenuItem key={link.href}>
+              <Link href={link.href} passHref legacyBehavior>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === link.href}
+                  className="w-full justify-start transition-transform hover:scale-105"
+                  tooltip={link.label}
+                >
+                  <a>
+                    <link.icon className="h-5 w-5" />
+                    <span>{link.label}</span>
+                  </a>
+                </SidebarMenuButton>
+              </Link>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarContent>
+      <SidebarFooter>
+        <p className="text-xs text-muted-foreground p-4 text-center">
+            © {new Date().getFullYear()} TradeFlow
+        </p>
+      </SidebarFooter>
+    </Sidebar>
+  );
+}
