@@ -15,7 +15,7 @@ import { aiChatbot } from '@/ai/flows/ai-chatbot';
 export function ChatLayout() {
   const [contacts] = useState<ChatContact[]>(mockChatContacts);
   const [selectedContact, setSelectedContact] = useState<ChatContact>(contacts[0]);
-  const [messages, setMessages] = useState<Message[]>(mockMessages[selectedContact.id]);
+  const [messages, setMessages] = useState<Message[]>(mockMessages[selectedContact.id] || []);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -27,7 +27,7 @@ export function ChatLayout() {
   useEffect(scrollToBottom, [messages]);
   
   useEffect(() => {
-    setMessages(mockMessages[selectedContact.id]);
+    setMessages(mockMessages[selectedContact.id] || []);
   }, [selectedContact]);
 
   const handleSendMessage = async (e: React.FormEvent) => {

@@ -200,7 +200,7 @@ export const mockChatContacts: ChatContact[] = [
     id: 'contact-1',
     name: 'TradeFlow AI',
     avatar: 'https://placehold.co/100x100.png',
-    lastMessage: 'Hello! How can I help you with your search today?',
+    lastMessage: 'Hello! How can I help you today?',
     lastMessageTime: '10:42 AM',
     isAi: true,
   },
@@ -221,10 +221,6 @@ export const mockChatContacts: ChatContact[] = [
 ];
 
 export const mockMessages: Record<string, Message[]> = {
-  'contact-1': [
-    { id: 'msg-ai-1', sender: 'TradeFlow AI', content: 'Hello! How can I help you with your search today?', timestamp: '10:42 AM', isSender: false },
-    { id: 'msg-ai-2', sender: 'You', content: 'I am looking for cheap rice', timestamp: '10:43 AM', isSender: true },
-  ],
   'user-1': [
      { id: 'msg-u1-1', sender: 'Anjali Sharma', content: 'Hi Raj, do you have any deals on turmeric powder?', timestamp: '9:28 AM', isSender: false },
      { id: 'msg-u1-2', sender: 'You', content: 'Hi Anjali, yes we have a 10% discount for bulk orders over 50kg.', timestamp: '9:29 AM', isSender: true },
