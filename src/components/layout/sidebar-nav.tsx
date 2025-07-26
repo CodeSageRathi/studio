@@ -36,6 +36,7 @@ const buyerLinks = [
   { href: '/orders', label: 'My Orders', icon: ShoppingCart },
   { href: '/wishlist', label: 'Wishlist', icon: Heart },
   { href: '/map', label: 'Locate Suppliers', icon: MapPin },
+  { href: '/suppliers', label: 'Find Suppliers', icon: Users },
   { href: '/chat', label: 'Chat', icon: MessageSquare },
 ];
 
