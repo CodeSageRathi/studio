@@ -1,5 +1,3 @@
-'use server';
-
 /**
  * @fileOverview Zod schemas and TypeScript types for the deals suggestion flow.
  */
