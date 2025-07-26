@@ -1,0 +1,37 @@
+diff --git a/node_modules/@opentelemetry/context-async-hooks/build/src/AsyncHooksContextManager.js b/node_modules/@opentelemetry/context-async-hooks/build/src/AsyncHooksContextManager.js
+index 27352f6891396b7552554e857476687a7457781b..565651c4a03e1987510d54f738f75841e737c156 100644
+--- a/node_modules/@opentelemetry/context-async-hooks/build/src/AsyncHooksContextManager.js
++++ b/node_modules/@opentelemetry/context-async-hooks/build/src/AsyncHooksContextManager.js
+@@ -16,7 +16,12 @@
+  */
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.AsyncHooksContextManager = void 0;
+-const asyncHooks = require("async_hooks");
++let asyncHooks;
++try {
++    asyncHooks = require("async_hooks");
++} catch (e) {
++    // async_hooks may not be available in all environments, like browsers.
++}
+ const AbstractAsyncHooksContextManager_1 = require("./AbstractAsyncHooksContextManager");
+ class AsyncHooksContextManager extends AbstractAsyncHooksContextManager_1.AbstractAsyncHooksContextManager {
+     constructor() {
+diff --git a/node_modules/@opentelemetry/context-async-hooks/build/src/AsyncLocalStorageContextManager.js b/node_modules/@opentelemetry/context-async-hooks/build/src/AsyncLocalStorageContextManager.js
+index 4b95f03d57f97800a07409c31327e57c4f1c322b..6c33842d0a0b6339455c1e5052990a424b914a2a 100644
+--- a/node_modules/@opentelemetry/context-async-hooks/build/src/AsyncLocalStorageContextManager.js
++++ b/node_modules/@opentelemetry/context-async-hooks/build/src/AsyncLocalStorageContextManager.js
+@@ -15,7 +15,12 @@
+  * limitations under the License.
+  */
+ Object.defineProperty(exports, "__esModule", { value: true });
+-const async_hooks_1 = require("async_hooks");
++let async_hooks_1;
++try {
++    async_hooks_1 = require("async_hooks");
++} catch (e) {
++    // async_hooks may not be available in all environments, like browsers.
++}
+ const api_1 = require("@opentelemetry/api");
+ /**
+  * A context manager that uses {@link AsyncLocalStorage} to propagate context.
+
