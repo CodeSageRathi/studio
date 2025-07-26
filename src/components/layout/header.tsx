@@ -52,6 +52,10 @@ export default function Header() {
     router.push('/role-selection');
   }
 
+  if (!user) {
+    return null; // or a loading skeleton
+  }
+
   return (
     <header className="sticky top-0 z-10 flex items-center justify-between h-16 px-4 bg-background/80 backdrop-blur-sm border-b">
       <div className="flex items-center gap-2">
