@@ -11,66 +11,79 @@ export const mockUsers: Record<string, User> = {
   },
   supplier1: {
     id: 'user-2',
-    name: 'Raj Patel',
-    email: 'raj.patel@example.com',
+    name: 'Das Provisions',
+    email: 'das.provisions@example.com',
+    role: 'supplier',
+    avatar: 'https://placehold.co/100x100.png',
+    location: {
+      lat: 22.5626,
+      lng: 88.3530,
+      city: 'B.B.D. Bagh, Kolkata',
+      country: 'India',
+    }
+  },
+  supplier2: {
+    id: 'user-3',
+    name: 'Ghosh Spices',
+    email: 'ghosh.spices@example.com',
+    role: 'supplier',
+    avatar: 'https://placehold.co/100x100.png',
+    location: {
+      lat: 22.5726,
+      lng: 88.3639,
+      city: 'Sealdah, Kolkata',
+      country: 'India',
+    }
+  },
+  supplier3: {
+    id: 'user-4',
+    name: 'Sen Wholesale',
+    email: 'sen.wholesale@example.com',
+    role: 'supplier',
+    avatar: 'https://placehold.co/100x100.png',
+    location: {
+      lat: 22.5448,
+      lng: 88.3426,
+      city: 'Alipore, Kolkata',
+      country: 'India',
+    }
+  },
+   supplier4: {
+    id: 'user-5',
+    name: 'Roy Edibles',
+    email: 'roy.edibles@example.com',
+    role: 'supplier',
+    avatar: 'https://placehold.co/100x100.png',
+    location: {
+      lat: 22.5176,
+      lng: 88.3831,
+      city: 'Ballygunge, Kolkata',
+      country: 'India',
+    }
+  },
+   supplier5: {
+    id: 'user-6',
+    name: 'Howrah Traders',
+    email: 'howrah.traders@example.com',
+    role: 'supplier',
+    avatar: 'https://placehold.co/100x100.png',
+    location: {
+      lat: 22.5958,
+      lng: 88.2636,
+      city: 'Howrah',
+      country: 'India',
+    }
+  },
+  supplier6: {
+    id: 'user-7',
+    name: 'New Delhi Grains',
+    email: 'ndg@example.com',
     role: 'supplier',
     avatar: 'https://placehold.co/100x100.png',
     location: {
       lat: 28.6139,
       lng: 77.2090,
       city: 'New Delhi',
-      country: 'India',
-    }
-  },
-  supplier2: {
-    id: 'user-3',
-    name: 'Priya Singh',
-    email: 'priya.singh@example.com',
-    role: 'supplier',
-    avatar: 'https://placehold.co/100x100.png',
-    location: {
-      lat: 28.6517,
-      lng: 77.2219,
-      city: 'Old Delhi',
-      country: 'India',
-    }
-  },
-  supplier3: {
-    id: 'user-4',
-    name: 'Amit Kumar',
-    email: 'amit.kumar@example.com',
-    role: 'supplier',
-    avatar: 'https://placehold.co/100x100.png',
-    location: {
-      lat: 28.5275,
-      lng: 77.2066,
-      city: 'Hauz Khas, New Delhi',
-      country: 'India',
-    }
-  },
-   supplier4: {
-    id: 'user-5',
-    name: 'Deepak Rao',
-    email: 'deepak.rao@example.com',
-    role: 'supplier',
-    avatar: 'https://placehold.co/100x100.png',
-    location: {
-      lat: 28.4595,
-      lng: 77.0266,
-      city: 'Gurugram',
-      country: 'India',
-    }
-  },
-   supplier5: {
-    id: 'user-6',
-    name: 'Sunita Devi',
-    email: 'sunita.devi@example.com',
-    role: 'supplier',
-    avatar: 'https://placehold.co/100x100.png',
-    location: {
-      lat: 19.0760,
-      lng: 72.8777,
-      city: 'Mumbai',
       country: 'India',
     }
   },

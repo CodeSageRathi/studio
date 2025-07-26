@@ -36,10 +36,10 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => 
 const allSuppliers = Object.values(mockUsers).filter(u => u.role === 'supplier' && u.location);
 
 // A central point for our search simulation (e.g., a major city center)
-const searchCenter = { lat: 28.6324, lng: 77.2187, name: 'Connaught Place, New Delhi' };
+const searchCenter = { lat: 22.5650, lng: 88.3380, name: 'Prinsep Ghat, Kolkata' };
 
 export default function MapPage() {
-  const [radius, setRadius] = useState(10); // Default radius in km
+  const [radius, setRadius] = useState(5); // Default radius in km
   const [foundSuppliers, setFoundSuppliers] = useState<User[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
@@ -63,7 +63,7 @@ export default function MapPage() {
   
   const mapUrl = useMemo(() => {
     // Basic map centered on our search area. A real implementation would be more dynamic.
-    return `https://www.openstreetmap.org/export/embed.html?bbox=${searchCenter.lng-0.2},${searchCenter.lat-0.2},${searchCenter.lng+0.2},${searchCenter.lat+0.2}`;
+    return `https://www.openstreetmap.org/export/embed.html?bbox=${searchCenter.lng-0.1},${searchCenter.lat-0.1},${searchCenter.lng+0.1},${searchCenter.lat+0.1}`;
   }, []);
 
   return (
@@ -84,14 +84,14 @@ export default function MapPage() {
             <div className="md:col-span-2">
                 <Label htmlFor="location">Your Location</Label>
                 {/* This is a controlled input, but we're using a fixed search center for demo */}
-                <Input id="location" placeholder="e.g., Connaught Place, New Delhi" defaultValue={searchCenter.name} />
+                <Input id="location" placeholder="e.g., Prinsep Ghat, Kolkata" defaultValue={searchCenter.name} />
             </div>
             <div>
                  <Label htmlFor="radius">Search Radius ({radius} km)</Label>
                  <Slider
                     id="radius"
-                    min={1}
-                    max={20}
+                    min={2}
+                    max={8}
                     step={1}
                     value={[radius]}
                     onValueChange={(value) => setRadius(value[0])}
@@ -129,8 +129,8 @@ export default function MapPage() {
             {(isSearching ? foundSuppliers : allSuppliers).map((supplier, index) => {
                 if(!supplier.location) return null;
                 // This positioning is a simple approximation and not perfectly accurate on a projected map.
-                const top = 50 - (supplier.location.lat - searchCenter.lat) * 250;
-                const left = 50 + (supplier.location.lng - searchCenter.lng) * 250;
+                const top = 50 - (supplier.location.lat - searchCenter.lat) * 500; // Adjusted multiplier for smaller bbox
+                const left = 50 + (supplier.location.lng - searchCenter.lng) * 500; // Adjusted multiplier for smaller bbox
 
                 return (
                     <div key={supplier.id} className="absolute" style={{ top: `${top}%`, left: `${left}%` }}>
