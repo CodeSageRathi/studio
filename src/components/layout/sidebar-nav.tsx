@@ -1,7 +1,7 @@
 
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -30,6 +30,7 @@ import {
 } from '@/components/ui/sidebar';
 import { useAppShell } from './app-shell';
 import { TradeFlowLogo } from '../icons';
+import { mockUsers } from '@/lib/mock-data';
 
 const buyerLinks = [
   { href: '/dashboard', label: 'Dashboard', icon: Home },
@@ -54,6 +55,18 @@ export default function SidebarNav() {
   const { role } = useAppShell();
   const pathname = usePathname();
   const links = role === 'buyer' ? buyerLinks : supplierLinks;
+
+  useEffect(() => {
+    // This is a simple way to simulate a database.
+    // On the first load of the app shell, we check if the user "database" exists.
+    // If not, we initialize it with our mock data.
+    // This ensures that new users created during signup are added to a persistent list.
+    const allUsers = localStorage.getItem('tradeflow-all-users');
+    if (!allUsers) {
+      localStorage.setItem('tradeflow-all-users', JSON.stringify(mockUsers));
+    }
+  }, []);
+
 
   return (
     <Sidebar>

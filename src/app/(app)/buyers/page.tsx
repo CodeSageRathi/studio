@@ -13,7 +13,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { mockUsers } from '@/lib/mock-data';
 import type { User } from '@/types';
 
 export default function BuyersPage() {
@@ -21,9 +20,10 @@ export default function BuyersPage() {
   const [allBuyers, setAllBuyers] = useState<User[]>([]);
 
   useEffect(() => {
-    // On component mount, load users from localStorage or fall back to mock data
+    // On component mount, load all users from localStorage.
+    // The user list is initialized in the sidebar component to ensure it exists.
     const storedUsers = localStorage.getItem('tradeflow-all-users');
-    const users = storedUsers ? JSON.parse(storedUsers) : mockUsers;
+    const users = storedUsers ? JSON.parse(storedUsers) : {};
     setAllBuyers(Object.values(users).filter((u: any) => u.role === 'buyer'));
   }, []);
 
