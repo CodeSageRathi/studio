@@ -39,7 +39,7 @@ const allSuppliers = Object.values(mockUsers).filter(u => u.role === 'supplier' 
 const initialCenter = { lat: 22.5650, lng: 88.3380, name: 'Kolkata' };
 
 export default function MapPage() {
-  const [radius, setRadius] = useState(5); // Default radius in km
+  const [radius, setRadius] = useState(10); // Default radius in km
   const [searchQuery, setSearchQuery] = useState('');
   const [searchCenter, setSearchCenter] = useState<{lat: number, lng: number, name: string} | null>(null);
   const [foundSuppliers, setFoundSuppliers] = useState<User[]>([]);
@@ -147,8 +147,8 @@ export default function MapPage() {
                  <Label htmlFor="radius">Search Radius ({radius} km)</Label>
                  <Slider
                     id="radius"
-                    min={2}
-                    max={8}
+                    min={1}
+                    max={25}
                     step={1}
                     value={[radius]}
                     onValueChange={(value) => setRadius(value[0])}
