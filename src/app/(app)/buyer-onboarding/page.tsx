@@ -328,7 +328,7 @@ export default function BuyerOnboardingPage() {
                     )}
                   />
                    <div className="space-y-2">
-                        <FormLabel className="flex items-center"><ImageIcon className="mr-2 h-4 w-4" />Upload Profile Image or Logo (Optional)</Form.Label>
+                        <FormLabel className="flex items-center"><ImageIcon className="mr-2 h-4 w-4" />Upload Profile Image or Logo (Optional)</FormLabel>
                         <FormControl><Input type="file" /></FormControl>
                     </div>
                 </div>
