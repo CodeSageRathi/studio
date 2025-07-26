@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Bell,
@@ -30,13 +30,33 @@ import {
 } from '@/components/ui/select';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { mockUsers } from '@/lib/mock-data';
-import type { Role } from '@/types';
+import type { Role, User } from '@/types';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 export default function Header() {
   const { role, setRole } = useAppShell();
-  const user = mockUsers[role];
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    // In a real app, this would be fetched from an API
+    const storedName = localStorage.getItem('tradeflow-user-name');
+    const storedEmail = localStorage.getItem('tradeflow-user-email');
+
+    if (storedName && storedEmail) {
+      setUser({
+        id: 'user-local',
+        name: storedName,
+        email: storedEmail,
+        role: role,
+        avatar: 'https://placehold.co/100x100.png',
+      });
+    } else {
+      // Fallback to mock data if nothing in localStorage (e.g., for login flow)
+      const mockUser = mockUsers[role] || (role === 'supplier' ? mockUsers['supplier1'] : mockUsers['buyer']);
+      setUser(mockUser);
+    }
+  }, [role]);
 
   // A simple theme toggler for demonstration
   const [theme, setTheme] = React.useState('light');
