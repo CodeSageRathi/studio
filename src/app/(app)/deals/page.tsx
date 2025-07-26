@@ -23,7 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { suggestDeals, SuggestDealsInput, SuggestDealsOutput } from "@/ai/flows/deals-suggestions"
+import { suggestDeals, SuggestDealsInputSchema, type SuggestDealsInput, type SuggestDealsOutput } from "@/ai/flows/deals-suggestions"
 import { Skeleton } from "@/components/ui/skeleton"
 
 export default function DealsPage() {
@@ -31,7 +31,7 @@ export default function DealsPage() {
   const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<SuggestDealsInput>({
-    resolver: zodResolver(SuggestDealsInput),
+    resolver: zodResolver(SuggestDealsInputSchema),
     defaultValues: {
       productName: "",
       currentStock: 1000,

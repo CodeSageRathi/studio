@@ -4,6 +4,7 @@
  * @fileOverview Deals suggestion AI agent.
  *
  * - suggestDeals - A function that suggests promotional deals for suppliers.
+ * - SuggestDealsInputSchema - The Zod schema for the input.
  * - SuggestDealsInput - The input type for the suggestDeals function.
  * - SuggestDealsOutput - The return type for the suggestDeals function.
  */
@@ -11,7 +12,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-const SuggestDealsInputSchema = z.object({
+export const SuggestDealsInputSchema = z.object({
   productName: z.string().describe('The name of the product.'),
   currentStock: z.number().describe('The current stock level of the product.'),
   averageDailySales: z
