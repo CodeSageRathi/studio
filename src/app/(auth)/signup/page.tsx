@@ -9,13 +9,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function SignupPage() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle className="text-2xl font-headline">Sign Up</CardTitle>
+        <CardTitle className="text-2xl font-headline">Create an Account</CardTitle>
         <CardDescription>
           Create an account to start trading on TradeFlow.
         </CardDescription>
@@ -39,21 +38,8 @@ export default function SignupPage() {
           <Label htmlFor="password">Password</Label>
           <Input id="password" type="password" required />
         </div>
-        <div className="grid gap-2">
-            <Label>I am a...</Label>
-            <RadioGroup defaultValue="buyer" className="flex gap-4">
-                <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="buyer" id="buyer" />
-                    <Label htmlFor="buyer">Buyer</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="supplier" id="supplier" />
-                    <Label htmlFor="supplier">Supplier</Label>
-                </div>
-            </RadioGroup>
-        </div>
         <Button asChild type="submit" className="w-full transition-transform hover:scale-105">
-          <Link href="/role-selection">Create an account</Link>
+          <Link href="/dashboard">Create an account</Link>
         </Button>
       </CardContent>
        <div className="mt-4 p-6 pt-0 text-center text-sm">

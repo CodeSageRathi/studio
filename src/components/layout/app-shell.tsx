@@ -5,7 +5,7 @@ import type { Role } from '@/types';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import SidebarNav from '@/components/layout/sidebar-nav';
 import Header from '@/components/layout/header';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 interface AppShellContextType {
   role: Role;
@@ -23,18 +23,26 @@ export function useAppShell() {
 }
 
 function AppShellInternal({ children }: { children: React.ReactNode }) {
-  const searchParams = useSearchParams();
-  const roleFromQuery = searchParams.get('role') as Role | null;
-  const [role, setRole] = useState<Role>(roleFromQuery || 'buyer');
+  const [role, setRole] = useState<Role>('buyer');
+  const router = useRouter();
 
   useEffect(() => {
-    if (roleFromQuery) {
-      setRole(roleFromQuery);
+    const storedRole = localStorage.getItem('tradeflow-role') as Role | null;
+    if (storedRole) {
+      setRole(storedRole);
+    } else {
+      // If no role is set, redirect to role selection
+      router.push('/role-selection');
     }
-  }, [roleFromQuery]);
+  }, [router]);
+
+  const handleSetRole = (newRole: Role) => {
+    setRole(newRole);
+    localStorage.setItem('tradeflow-role', newRole);
+  }
 
   return (
-    <AppShellContext.Provider value={{ role, setRole }}>
+    <AppShellContext.Provider value={{ role, setRole: handleSetRole as React.Dispatch<React.SetStateAction<Role>> }}>
       <SidebarProvider>
         <SidebarNav />
         <div className="flex flex-col flex-1 h-screen overflow-y-auto">
@@ -47,6 +55,9 @@ function AppShellInternal({ children }: { children: React.ReactNode }) {
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {
+  // Using a Suspense boundary with a key on AppShellInternal that changes with the role
+  // is a good practice if you notice state not resetting correctly between role changes.
+  // For now, we'll keep it simple.
   return (
     <React.Suspense fallback={<div>Loading...</div>}>
       <AppShellInternal>{children}</AppShellInternal>

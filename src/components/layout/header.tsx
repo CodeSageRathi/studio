@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   Bell,
   ChevronDown,
@@ -36,6 +36,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 export default function Header() {
   const { role, setRole } = useAppShell();
   const user = mockUsers[role];
+  const router = useRouter();
 
   // A simple theme toggler for demonstration
   const [theme, setTheme] = React.useState('light');
@@ -44,6 +45,12 @@ export default function Header() {
     setTheme(newTheme);
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
+
+  const handleLogout = () => {
+    // We don't clear localStorage here, so the user's last role is remembered
+    // for the role selection screen.
+    router.push('/role-selection');
+  }
 
   return (
     <header className="sticky top-0 z-10 flex items-center justify-between h-16 px-4 bg-background/80 backdrop-blur-sm border-b">
@@ -101,11 +108,9 @@ export default function Header() {
               <span>Settings</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href="/login">
+            <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
-              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
