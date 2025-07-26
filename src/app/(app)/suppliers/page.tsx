@@ -3,7 +3,8 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Mail, MessageSquare } from 'lucide-react';
+import { Search, Mail, MessageSquare, Briefcase, Info } from 'lucide-react';
+import Link from 'next/link';
 import {
   Card,
   CardContent,
@@ -16,15 +17,16 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import type { User } from '@/types';
+import { useAppShell } from '@/components/layout/app-shell';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function SuppliersPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [allSuppliers, setAllSuppliers] = useState<User[]>([]);
   const router = useRouter();
+  const { role } = useAppShell();
 
   useEffect(() => {
-    // On component mount, load all users from localStorage.
-    // The user list is initialized in the sidebar component to ensure it exists.
     const storedUsers = localStorage.getItem('tradeflow-all-users');
     const users = storedUsers ? JSON.parse(storedUsers) : {};
     setAllSuppliers(Object.values(users).filter((u: any) => u.role === 'supplier'));
@@ -55,6 +57,19 @@ export default function SuppliersPage() {
           Search for suppliers by their name, company, or email.
         </p>
       </div>
+
+      {role === 'buyer' && (
+        <Alert>
+            <Briefcase className="h-4 w-4" />
+            <AlertTitle>Want to be discovered by suppliers?</AlertTitle>
+            <AlertDescription className="flex items-center justify-between">
+                <p>Create a detailed buyer profile to get a &quot;Trusted&quot; badge and let suppliers find you.</p>
+                <Button asChild>
+                    <Link href="/buyer-onboarding">Create Your Buyer Profile</Link>
+                </Button>
+            </AlertDescription>
+        </Alert>
+      )}
 
       <Card>
         <CardContent className="p-4">

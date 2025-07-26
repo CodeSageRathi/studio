@@ -3,7 +3,8 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Mail, MessageSquare } from 'lucide-react';
+import Link from 'next/link';
+import { Search, Mail, MessageSquare, Info, Users } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -15,11 +16,14 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import type { User } from '@/types';
+import { useAppShell } from '@/components/layout/app-shell';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 
 export default function BuyersPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [allBuyers, setAllBuyers] = useState<User[]>([]);
   const router = useRouter();
+  const { role } = useAppShell();
 
   useEffect(() => {
     // On component mount, load all users from localStorage.
@@ -51,9 +55,22 @@ export default function BuyersPage() {
       <div>
         <h1 className="text-3xl font-bold font-headline">Find Buyers</h1>
         <p className="text-muted-foreground">
-          Search for buyers by their name or email.
+          Search for potential buyers and new leads for your products.
         </p>
       </div>
+
+       {role === 'supplier' && (
+        <Alert>
+            <Users className="h-4 w-4" />
+            <AlertTitle>Want to reach more buyers?</AlertTitle>
+            <AlertDescription className="flex items-center justify-between">
+                <p>Create a detailed supplier profile to get a &quot;Trusted&quot; badge and increase your visibility.</p>
+                <Button asChild>
+                    <Link href="/supplier-onboarding">Create Your Supplier Profile</Link>
+                </Button>
+            </AlertDescription>
+        </Alert>
+      )}
 
       <Card>
         <CardContent className="p-4">
