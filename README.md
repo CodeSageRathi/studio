@@ -1,117 +1,140 @@
-# 🚀 TradeFlow – B2B Agricultural Marketplace Platform
+# 🛒 Buyer-Supplier Discovery Platform
 
-**TradeFlow** is a modern, secure, and scalable B2B web platform designed specifically to connect agricultural **suppliers** and **buyers**. It offers end-to-end support for product listing, deal negotiation, inventory management, real-time order tracking, and AI-powered engagement.
+This is a real-time geo-location based platform where **buyers and suppliers** can discover each other based on location, trust level, and business category. The platform empowers **local commerce**, builds trust with **verified profiles**, and helps streamline sourcing and selling.
 
----
+## 🌐 Core Concept
 
-## 🌟 Key Features
-
-### 1. 🔐 Secure Authentication
-- Role-based login/signup for **Buyers** and **Suppliers**.
-- OTP, password login, and secure session management.
-- ‘Forgot Password’ flow with verification.
-- JWT + HTTPS + secure session handling.
+📍 Built on Google Maps API, the platform allows:
+- **Suppliers** to list their businesses and attract nearby buyers.
+- **Buyers** to discover trusted, relevant suppliers within their vicinity.
 
 ---
 
-### 2. 🛒 Product Browsing (For Buyers)
-- Browse categorized agricultural products: *grains, spices, seeds, etc.*
-- Sorting by **Price**, **Rating**, and **Delivery Time**.
-- Detailed product cards with MOQ, quality grades, lead time, etc.
+## 🔐 Verified & Trusted Accounts
+
+To ensure **reliability** and **authenticity**, both buyers and suppliers can upgrade to **Trusted Accounts** by submitting comprehensive business or personal data. These trusted accounts get a badge, higher visibility, and access to deeper insights.
 
 ---
 
-### 3. 📦 Product Management (For Suppliers)
-- Add, edit, delete product listings.
-- Set **MOQ**, bulk pricing tiers, delivery time, stock tracking.
-- Real-time stock warnings & automatic unlisting when out of stock.
+## 🧑‍💼 Supplier Perspective
+
+### ✅ Supplier Onboarding Flow
+When a supplier registers, we collect:
+- **Business Name**
+- **Contact Person**
+- **Business Type**: Individual / Shop / Distributor / Manufacturer
+- **GST Number / License ID**
+- **Product Category**: Dropdown (Vegetables, Textiles, Hardware, etc.)
+- **Business Location**: GPS auto-detect or manual entry (city, district, state)
+- **Verification Documents (Optional)** for Trusted Account
+- **Shop Timings & Delivery Options**
+
+### 📍 Supplier Map Visibility
+- Supplier’s shop is pinned on the map for buyers within a **2–8 km radius**.
+- Suppliers can **see nearby buyers** looking for their product category.
+- Profile card visible to buyers with:
+  - Business logo/avatar
+  - Trust badge if verified
+  - Category
+  - Ratings
+  - Delivery availability
+  - Contact options
+
+### 🛠 Supplier Dashboard Features
+- Manage Products & Categories
+- Toggle Availability (Active/Inactive)
+- View Buyer Interests (anonymous until connected)
+- Upgrade to Trusted Supplier
 
 ---
 
-### 4. 📈 Deals & Smart Promotion System
-- AI tool to suggest **quantity-based** or **time-based** promotional deals.
-- Supplier can target inactive or potential buyers with custom offers.
-- Suggestions adapt based on inventory age and stock velocity.
+## 🛍 Buyer Perspective
+
+### ✅ Buyer Registration Flow
+We collect:
+- **Name**
+- **Contact Number**
+- **Buying Preferences** (categories interested in)
+- **Location (GPS or manual)**: To find nearby suppliers
+- **Purpose**: Daily use / Bulk order / Wholesale
+- **Verification (Optional)** for Trusted Account
+
+### 🔍 Buyer Map Experience
+- Buyer sees nearby suppliers filtered by:
+  - Product Category
+  - Distance Radius (e.g., 2–8 km)
+  - Trust Level (can choose “Only Trusted Suppliers”)
+- Buyer profile visible to suppliers **if buyer opts in** (for B2B interactions)
+
+### 🧾 Buyer Dashboard Features
+- Browse Suppliers by Category or Trust Level
+- Save Favorite Suppliers
+- See Shop Details (location, open hours, trust badge)
+- Request Quotation / Contact Supplier
+- Upgrade to Trusted Buyer
 
 ---
 
-### 5. 💬 In-App Real-Time Chat
-- Role-based messaging (buyer ↔ supplier).
-- File/image support (invoices, product images).
-- Typing indicator, seen status, emoji support.
-- End-to-end encrypted via socket-based communication.
+## 🧠 Smart Matching Engine
+
+We match buyers and suppliers based on:
+- **Proximity**
+- **Product category**
+- **Verified status**
+- **Activity status (open/closed now)**
 
 ---
 
-### 6. 🚚 Order & Delivery Tracking
-- **Suppliers** can manage live, pending, delivered, and cancelled orders.
-- **Buyers** can view status with expected delivery dates.
-- Refund request flow & cancellation handling per item.
+## 🔐 Trusted Account Features (for both roles)
+
+| Feature                    | Regular Account | Trusted Account |
+|---------------------------|-----------------|------------------|
+| Map Visibility            | ✅              | 🔝 Higher Rank   |
+| Profile Card              | ✅              | ⭐ Trust Badge   |
+| Document Verified         | ❌              | ✅               |
+| Extended Radius Match     | ❌              | ✅ (up to 12km)  |
+| Priority Listing          | ❌              | ✅               |
+| Review & Rating Access    | ❌              | ✅               |
 
 ---
 
-### 7. 🤖 AI Assistant Chatbot
-- Embedded AI chatbot for:
-  - Supplier onboarding & FAQs.
-  - Buyer product recommendations.
-  - Basic support & automated replies.
-- Built with OpenAI/Gemini APIs for dynamic response generation.
+## 🚀 Future Scope
+
+- 🗂 Filter by Ratings, Delivery Speed, Open Now
+- 🧾 Buyer Requirements Broadcast (Suppliers can bid)
+- 💬 In-app Chat (Buyer ↔ Supplier)
+- 📦 Order Tracking Integration (For delivery-focused shops)
+- 📊 Supplier Analytics (Views, Clicks, Matches)
 
 ---
 
-## 🎨 Design System & UI/UX Guidelines
+## 🛠 Built With
 
-### 🎨 Color Scheme
-| Element              | Color     | Hex Code   |
-|----------------------|-----------|------------|
-| Primary              | Indigo    | `#4B0082`  |
-| Accent / CTA         | Teal      | `#008080`  |
-| Background           | Light Gray| `#F0F0F5`  |
-| Text Primary         | Charcoal  | `#2C2C2C`  |
-| Success/Info Alerts  | Soft Green| `#DFF5E1`  |
-
-### ✨ Animations
-- Smooth page transitions (Framer Motion or GSAP).
-- Button hover effects, card pop on scroll.
-- Animated typing indicator in chat.
-- Dashboard widgets fade-in and number counter animation.
+- Google Maps API
+- Firebase (Authentication + Firestore)
+- React / Next.js Frontend *(optional for now)*
 
 ---
 
-## 🧩 Pages & Navigation Map
+## 👥 Roles Summary
 
-| Page | Role | Features |
-|------|------|----------|
-| `Home` | Public | Landing + Intro |
-| `Login/Signup` | Buyer/Supplier | Auth with role switcher |
-| `Buyer Dashboard` | Buyer | Browse, track orders, chat, view deals |
-| `Supplier Dashboard` | Supplier | Product management, order status, deal setup |
-| `Product Details` | Both | Full view of listings |
-| `Chat` | Both | Buyer-Supplier messaging |
-| `Profile` | Both | Update info, company profile, documents |
-| `Deals Engine` | Supplier | AI deal recommendations |
-| `Order Management` | Supplier | Status panel with actions |
-| `Bot Chat` | Both | AI-based assistant |
+| Feature                          | Buyer                | Supplier             |
+|----------------------------------|----------------------|----------------------|
+| Map-based Discovery              | ✅                  | ✅                  |
+| Category Matching                | ✅                  | ✅                  |
+| Profile Card Visibility          | ✅ (if opted in)    | ✅                  |
+| Contact Option                   | ✅                  | ✅                  |
+| Trusted Account Badge            | ✅ (optional)        | ✅ (optional)        |
+| Dashboard with Activity          | ✅                  | ✅                  |
 
 ---
 
-## 🛠️ Tech Stack
+## 📌 Example Use-Case
 
-- **Frontend**: Next.js, TailwindCSS, Framer Motion
-- **Backend**: Node.js, Express.js, PostgreSQL
-- **Authentication**: Firebase Auth or JWT with OTP module
-- **Real-time**: Socket.io for chat
-- **AI**: OpenAI / Gemini API for chatbot + smart deals
-- **Deployment**: Vercel (Frontend), Render/Heroku (Backend)
+> A restaurant owner (buyer) is looking for daily fresh vegetables within 5 km. Opens the app → sees 3 nearby trusted suppliers (with ratings, pricing, open hours) → sends quotation request → gets response in real-time.
 
 ---
 
-## 🤝 Contribution
+## 💡 Vision
 
-We’re building for real-world scale with simplicity and security in mind. If you’re a developer, designer, or strategist who wants to collaborate or test this system, fork the repo and raise a PR or drop an issue.
-
----
-
-> **Note:** TradeFlow is a project prototype tailored for agricultural trade but can be extended to other B2B verticals like textiles, electronics, etc.
-
----
+This platform bridges the local gap between demand and supply. Whether it’s a daily vegetable buyer or a wholesale textile distributor, we bring **trust + location + need** together for **smart, local commerce.**
